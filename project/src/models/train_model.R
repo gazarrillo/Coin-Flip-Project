@@ -19,8 +19,12 @@ model1 <- glm(result ~ . , data=train, family=binomial)
 
 test$model1 <- predict(model1, newdata=test, type='response')
 
+# Save model to a separate file
+
+saveRDS(model1,"./project/volume/models/model1.model") # replace with intended model
+
 # Making submission file
 
-test$result <- test$model0 # replace with intended model
+test$result <- test$model1 # replace with intended model
 
-fwrite(test[, .(id, SalePrice)], './project/volume/data/processed/submit.csv')
+fwrite(test[, .(id, result)], './project/volume/data/processed/submit.csv')
